@@ -1,14 +1,16 @@
 {
-  "name": "3d-website-test1",
+  "name": "3d-web-development-test1",
   "private": true,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "^4.5.4",
     "vite": "^2.9.9"
+  },
+  "dependencies": {
+    "tree": "^0.1.3"
   }
 }
