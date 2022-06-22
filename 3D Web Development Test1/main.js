@@ -1,3 +1,5 @@
+// source: https://www.youtube.com/watch?v=Q7AOvWpIVHU
+
 import "./style.css";
 
 import * as THREE from "three";
@@ -68,8 +70,26 @@ function addStar() {
 
 Array(200).fill().forEach(addStar);
 
+// MARK: Texture loading
 const spaceTexture = new THREE.TextureLoader().load("stars.jpg");
 scene.background = spaceTexture;
+
+const somethingTexture = new THREE.TextureLoader().load("asdf.png");
+const normalTexture = new THREE.TextureLoader().load("asdf.png");
+
+const jeff = new THREE.Mesh(
+  new THREE.BoxGeometry(3, 3, 3),
+  new THREE.MeshBasicMaterial({ map: somethingTexture })
+);
+
+// normal mapping
+const moon = new THREE.Mesh(
+  new THREE.BoxGeometry(3, 3, 3),
+  new THREE.MeshBasicMaterial({
+    map: somethingTexture,
+    normalMap: normalTexture,
+  })
+);
 
 // MARK: Animation
 function animate() {
