@@ -46,10 +46,10 @@ scene.add(pointLight, ambientLight);
 const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200, 50);
 
-scene.add(lightHelper, gridHelper);
+scene.add(lightHelper);
 
 // MARK: OrbitControls
-const controls = new OrbitControls(camera, renderer.domElement);
+//const controls = new OrbitControls(camera, renderer.domElement);
 
 // MARK: addStars
 function addStar() {
@@ -74,22 +74,38 @@ Array(200).fill().forEach(addStar);
 const spaceTexture = new THREE.TextureLoader().load("stars.jpg");
 scene.background = spaceTexture;
 
-const somethingTexture = new THREE.TextureLoader().load("asdf.png");
-const normalTexture = new THREE.TextureLoader().load("asdf.png");
+const moonTexture = new THREE.TextureLoader().load("moon_texture.jpg");
+const moonNormal = new THREE.TextureLoader().load("moon_normal.jpg");
 
 const jeff = new THREE.Mesh(
   new THREE.BoxGeometry(3, 3, 3),
-  new THREE.MeshBasicMaterial({ map: somethingTexture })
+  new THREE.MeshBasicMaterial({ map: moonTexture })
 );
 
 // normal mapping
 const moon = new THREE.Mesh(
-  new THREE.BoxGeometry(3, 3, 3),
-  new THREE.MeshBasicMaterial({
-    map: somethingTexture,
-    normalMap: normalTexture,
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshStandardMaterial({
+    map: moonTexture,
+    normalMap: moonNormal,
   })
 );
+
+scene.add(moon);
+
+// MARK: scroll
+function moveCamera() {
+  const t = document.body.getBoundingClientRect().top;
+  moon.rotation.x += 0.05;
+  moon.rotation.y += 0.075;
+  moon.rotation.z += 0.05;
+
+  camera.position.z = t * -0.01;
+  camera.position.x = t * -0.0002;
+  camera.position.y = t * -0.0002;
+}
+
+document.body.onscroll = moveCamera;
 
 // MARK: Animation
 function animate() {
@@ -98,7 +114,7 @@ function animate() {
   torus.rotation.x += 0.01;
   torus.rotation.y += 0.005;
 
-  controls.update();
+  //controls.update();
 
   renderer.render(scene, camera);
 }
